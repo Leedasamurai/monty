@@ -3,45 +3,6 @@
 #include "monty.h"
 
 /**
- * push - pushes element into stack
- * @stack: pointer to stack
- * @value: value of Monty byte code file
- */
-void push(stack_t **stack, int value)
-{
-	stack_t *new_node = malloc(sizeof(stack_t));
-	if (!new_node)
-	{
-		fprintf(stderr, "Error: malloc failed\n");
-		exit(EXIT_FAILURE);
-	}
-
-	new_node->n = value;
-	new_node->prev = NULL;
-	new_node->next = *stack;
-
-	if (*stack)
-		(*stack)->prev = new_node;
-
-	*stack = new_node;
-}
-
-/**
- * pall - the values on the stack
- * @stack: pointer to stack
- */
-void pall(stack_t **stack)
-{
-	stack_t *current = *stack;
-
-	while (current)
-	{
-		printf("%d\n", current->n);
-		current = current->next;
-	}
-}
-
-/**
  * main - Monty interpreter entry point
  * @argc: command-line arg amount
  * @argv: Arr of the command-line arg strings
@@ -96,6 +57,10 @@ int main(int argc, char *argv[])
 
 				value = atoi(arg);
 				push(&stack, value);
+			}
+			else if (strcmp(opcode, "pint") == 0)
+			{
+				pint(&stack, line_number);
 			}
 			else if (strcmp(opcode, "pall") == 0)
 			{
